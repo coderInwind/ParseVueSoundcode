@@ -11,10 +11,11 @@ function Vue(options) {
   if (process.env.NODE_ENV !== "production" && !(this instanceof Vue)) {
     warn("Vue is a constructor and should be called with the `new` keyword");
   }
-  // 调用initMixin为Vue实例原型挂载的_init
+  // 调用_init
   this._init(options);
 }
 
+// 挂载_init方法
 initMixin(Vue);
 stateMixin(Vue);
 eventsMixin(Vue);

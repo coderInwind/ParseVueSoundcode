@@ -1,5 +1,68 @@
-/* @flow */
+## VUE 的初始化流程
 
+`src/core/index`
+```import Vue from './instance/index'
+import { initGlobalAPI } from './global-api/index'
+import { isServerRendering } from 'core/util/env'
+import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
+// 给vue实例挂载了静态成员
+initGlobalAPI(Vue)
+
+Object.defineProperty(Vue.prototype, '$isServer', {
+  get: isServerRendering
+})
+
+Object.defineProperty(Vue.prototype, '$ssrContext', {
+  get () {
+    /* istanbul ignore next */
+    return this.$vnode && this.$vnode.ssrContext
+  }
+})
+
+// expose FunctionalRenderContext for ssr runtime helper installation
+Object.defineProperty(Vue, 'FunctionalRenderContext', {
+  value: FunctionalRenderContext
+})
+
+Vue.version = '__VERSION__'
+
+export default Vue
+```
+
+`src/core/instance/index.js`
+
+此处声明 Vue 实例对象的构造函数，并进行一系列初始化
+```
+import { initMixin } from "./init";
+import { stateMixin } from "./state";
+import { renderMixin } from "./render";
+import { eventsMixin } from "./events";
+import { lifecycleMixin } from "./lifecycle";
+import { warn } from "../util/index";
+
+function Vue(options) {
+  //判断是否以new关键字创建的vue实例
+  console.log(this);
+  if (process.env.NODE_ENV !== "production" && !(this instanceof Vue)) {
+    warn("Vue is a constructor and should be called with the `new` keyword");
+  }
+  // 调用_init
+  this._init(options);
+}
+
+// 挂载_init方法
+initMixin(Vue);
+stateMixin(Vue);
+eventsMixin(Vue);
+lifecycleMixin(Vue);
+renderMixin(Vue);
+
+export default Vue;
+```
+
+### 1、initMixin
+
+```
 import config from "../config";
 import { initProxy } from "./proxy";
 import { initState } from "./state";
@@ -72,62 +135,4 @@ export function initMixin(Vue: Class<Component>) {
     }
   };
 }
-
-export function initInternalComponent(
-  vm: Component,
-  options: InternalComponentOptions
-) {
-  const opts = (vm.$options = Object.create(vm.constructor.options));
-  // doing this because it's faster than dynamic enumeration.
-  const parentVnode = options._parentVnode;
-  opts.parent = options.parent;
-  opts._parentVnode = parentVnode;
-
-  const vnodeComponentOptions = parentVnode.componentOptions;
-  opts.propsData = vnodeComponentOptions.propsData;
-  opts._parentListeners = vnodeComponentOptions.listeners;
-  opts._renderChildren = vnodeComponentOptions.children;
-  opts._componentTag = vnodeComponentOptions.tag;
-
-  if (options.render) {
-    opts.render = options.render;
-    opts.staticRenderFns = options.staticRenderFns;
-  }
-}
-
-export function resolveConstructorOptions(Ctor: Class<Component>) {
-  let options = Ctor.options;
-  if (Ctor.super) {
-    const superOptions = resolveConstructorOptions(Ctor.super);
-    const cachedSuperOptions = Ctor.superOptions;
-    if (superOptions !== cachedSuperOptions) {
-      // super option changed,
-      // need to resolve new options.
-      Ctor.superOptions = superOptions;
-      // check if there are any late-modified/attached options (#4976)
-      const modifiedOptions = resolveModifiedOptions(Ctor);
-      // update base extend options
-      if (modifiedOptions) {
-        extend(Ctor.extendOptions, modifiedOptions);
-      }
-      options = Ctor.options = mergeOptions(superOptions, Ctor.extendOptions);
-      if (options.name) {
-        options.components[options.name] = Ctor;
-      }
-    }
-  }
-  return options;
-}
-
-function resolveModifiedOptions(Ctor: Class<Component>): ?Object {
-  let modified;
-  const latest = Ctor.options;
-  const sealed = Ctor.sealedOptions;
-  for (const key in latest) {
-    if (latest[key] !== sealed[key]) {
-      if (!modified) modified = {};
-      modified[key] = latest[key];
-    }
-  }
-  return modified;
-}
+```

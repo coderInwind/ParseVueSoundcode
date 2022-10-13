@@ -12,12 +12,3 @@
   + sfc：vue文件解析
   + shared：通用的方法与变量
 - test：测试文件夹
-
-
-### 1、new Vue做了什么？
-
-![](../createVueInstance.png)
-这里写了一个小dome，new了一个Vue实例，从源码core/index看,
-这个实例来自core/instance/index
-![](../vueIndex.png)
-此处还做了一系列的数据劫持，这个暂且先不看，现成实例模块看起
