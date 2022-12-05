@@ -1,5 +1,5 @@
 /* @flow */
-
+// 直接全部导出
 export * from 'shared/util'
 export * from './lang'
 export * from './env'

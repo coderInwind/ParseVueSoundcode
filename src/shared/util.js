@@ -158,6 +158,11 @@ export function cached<F: Function> (fn: F): F {
   }: any)
 }
 
+// id => {
+//   const el = query(id)
+//   return el && el.innerHTML
+// }
+
 /**
  * Camelize a hyphen-delimited string.
  */

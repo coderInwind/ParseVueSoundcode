@@ -16,6 +16,7 @@ export function initMixin(Vue: Class<Component>) {
   // 添加到Vue构造函数
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this;
+
     // uid是每个Vue实例的唯一标识
     vm._uid = uid++;
 
@@ -42,6 +43,7 @@ export function initMixin(Vue: Class<Component>) {
         vm
       );
     }
+
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== "production") {
       initProxy(vm);
@@ -62,11 +64,11 @@ export function initMixin(Vue: Class<Component>) {
 
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== "production" && config.performance && mark) {
+      //格式化组件名
       vm._name = formatComponentName(vm, false);
       mark(endTag);
       measure(`vue ${vm._name} init`, startTag, endTag);
     }
-
     if (vm.$options.el) {
       vm.$mount(vm.$options.el);
     }
@@ -97,16 +99,18 @@ export function initInternalComponent(
 
 export function resolveConstructorOptions(Ctor: Class<Component>) {
   let options = Ctor.options;
+
   if (Ctor.super) {
+    // 父类options
     const superOptions = resolveConstructorOptions(Ctor.super);
+    // 自身的options
     const cachedSuperOptions = Ctor.superOptions;
+    // 此处判断是否有mixin的让父类的options发送过改变
     if (superOptions !== cachedSuperOptions) {
-      // super option changed,
-      // need to resolve new options.
       Ctor.superOptions = superOptions;
-      // check if there are any late-modified/attached options (#4976)
+
       const modifiedOptions = resolveModifiedOptions(Ctor);
-      // update base extend options
+
       if (modifiedOptions) {
         extend(Ctor.extendOptions, modifiedOptions);
       }
@@ -123,6 +127,7 @@ function resolveModifiedOptions(Ctor: Class<Component>): ?Object {
   let modified;
   const latest = Ctor.options;
   const sealed = Ctor.sealedOptions;
+
   for (const key in latest) {
     if (latest[key] !== sealed[key]) {
       if (!modified) modified = {};

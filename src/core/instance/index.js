@@ -7,7 +7,6 @@ import { warn } from "../util/index";
 
 function Vue(options) {
   //判断是否以new关键字创建的vue实例
-  console.log(this);
   if (process.env.NODE_ENV !== "production" && !(this instanceof Vue)) {
     warn("Vue is a constructor and should be called with the `new` keyword");
   }
@@ -15,7 +14,7 @@ function Vue(options) {
   this._init(options);
 }
 
-// 挂载_init方法
+// 初始化
 initMixin(Vue);
 stateMixin(Vue);
 eventsMixin(Vue);

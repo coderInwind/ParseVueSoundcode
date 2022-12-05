@@ -1,0 +1,28 @@
+<mxfile host="65bd71144e">
+    <diagram id="LJtLJr3oxzAxlioSJbR_" name="第 1 页">
+        <mxGraphModel dx="715" dy="489" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="1654" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="8" style="edgeStyle=none;html=1;entryX=0.004;entryY=0.307;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="2" target="7">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="快洗" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="50" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="漂洗" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="100" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="浸泡" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="150" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="单洗" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="200" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="洗衣机" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="50" width="190" height="190" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

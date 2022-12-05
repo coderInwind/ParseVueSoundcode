@@ -17,7 +17,6 @@ import {
   isBuiltInTag,
   isPlainObject,
 } from "shared/util";
-
 /**
  * Option overwriting strategies are functions that handle
  * how to merge a parent option value and a child option
@@ -102,6 +101,7 @@ export function mergeDataOrFn(
         typeof childVal === "function" ? childVal.call(vm, vm) : childVal;
       const defaultData =
         typeof parentVal === "function" ? parentVal.call(vm, vm) : parentVal;
+
       if (instanceData) {
         return mergeData(instanceData, defaultData);
       } else {
@@ -125,7 +125,6 @@ strats.data = function (
             "definitions.",
           vm
         );
-
       return parentVal;
     }
     return mergeDataOrFn(parentVal, childVal);
@@ -383,7 +382,6 @@ function assertObjectType(name: string, value: any, vm: ?Component) {
  * Merge two option objects into a new one.
  * Core utility used in both instantiation and inheritance.
  */
-//将全局api混入实例
 
 export function mergeOptions(
   parent: Object,
@@ -403,10 +401,7 @@ export function mergeOptions(
   normalizeInject(child, vm);
   normalizeDirectives(child);
 
-  // Apply extends and mixins on the child options,
-  // but only if it is a raw options object that isn't
-  // the result of another mergeOptions call.
-  // Only merged options has the _base property.
+  // initGlobal中的_挂载的
   if (!child._base) {
     if (child.extends) {
       parent = mergeOptions(parent, child.extends, vm);
